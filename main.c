@@ -1,104 +1,52 @@
 #include <stdio.h>
-#include <string.h>
+#include "funciones.h"
 
-int menu();
-void ingresarNombre(char nombre[30], int i);
-void ingresarMateria(char materia[30],int i);
-float ingresarNotasMateria(char nombre[30], char materia[30]);
+int main() {
+    Libro libros[MAX_LIBROS];
+    int cantidad = 0;
+    int opcion;
 
+    do {
+        printf("\n--- MENU BIBLIOTECA ---\n");
+        printf("1. Registrar libro\n");
+        printf("2. Mostrar libros\n");
+        printf("3. Buscar libro\n");
+        printf("4. Actualizar estado\n");
+        printf("5. Eliminar libro\n");
+        printf("6. Salir\n");
 
-int main (int argc, char *argv[]) {
-    char nombres[5][30];
-    char materias[3][30];
-    float NM1[5], NM2[5], NM3[5];
-    int opc, conta=0, contm = 0, aux = 0;
-    do
-    {
-        opc = menu();
+        opcion = leerEnteroPositivo("Seleccione una opcion: ");
 
-        switch (opc)
-        {
-        case 1:
-            ingresarNombre(nombres[conta], conta);
-            conta++;
-            break;
-        case 2:
-            ingresarMateria(materias[contm], contm);
-            contm++;
-            break;
-        case 3:
-
-            printf("Seleccione el alumno del cual desea ingresar las notas: \n");
-            printf("#\tNombre\n");
-            for (int i = 0; i < conta; i++)
-            {
-                printf("%d\t%s\n", i, nombres[i]);
-            }
-            printf(">> ");
-            scanf("%d", &aux);
-            NM1[aux] = ingresarNotasMateria(materias[0], nombres[aux]);
-            NM2[aux] = ingresarNotasMateria(materias[1], nombres[aux]);
-            NM3[aux] = ingresarNotasMateria(materias[2], nombres[aux]);
-
-            break;
-
-        default:
-            break;
+        
+        if (cantidad == 0 && opcion != 1 && opcion != 6) {
+            printf("  Debe registrar al menos un libro antes de usar esta opcion.\n");
+            continue;
         }
-    } while (opc != 8);
+
+        switch (opcion) {
+            case 1:
+                registrarLibro(libros, &cantidad, cantidad);
+                break;
+            case 2:
+                mostrarLibros(libros, cantidad);
+                break;
+            case 3:
+                buscarLibro(libros, cantidad);
+                break;
+            case 4:
+                actualizarEstado(libros, cantidad);
+                break;
+            case 5:
+                eliminarLibro(libros, &cantidad);
+                break;
+            case 6:
+                printf("Saliendo del programa...\n");
+                break;
+            default:
+                printf("Opcion no valida.\n");
+        }
+
+    } while (opcion != 6);
 
     return 0;
-}
-
-int menu(){
-    int opc;
-    printf("Seleccione una opcion: \n");
-    printf("1. Ingrese nombre del alumno\n");
-    printf("2. Ingrese materias\n");
-    printf("3. Ingrese calificaciones\n");
-    printf("4. Ver promedio por alumno\n");
-    printf("5. Ver promedio por materia\n");
-    printf("6. Ver notas altas y bajas por alumno\n");
-    printf("7. Ver notas altas y bajas por materia\n");
-    printf("8. Salir\n");
-    printf(">> ");
-    scanf("%d",&opc);
-    return opc;
-}
-
-void ingresarNombre(char nombre[30], int i){
-    int len;
-    printf("Ingrese el nombre del alumno %d: ",i);
-    fflush(stdin);
-    fgets(nombre,30,stdin);
-    len = strlen(nombre) - 1;
-    nombre[len]='\0';
-}
-
-void ingresarMateria(char materia[30],int i){
-    int len;
-    printf("Ingrese el nombre de la materia %d: ",i);
-    fflush(stdin);
-    fgets(materia,30,stdin);
-    len = strlen(materia) - 1;
-    materia[len]='\0';
-}
-
-float ingresarNotasMateria(char nombre[30], char materia[30]){
-    float m;
-    int val;
-    do
-    {
-        printf("Ingrese la nota de la materia %s del alumno %s: ", materia, nombre);
-        val = scanf("%f", &m);
-        if (val != 1)
-        {
-            printf("El valor ingresado no es correcto\n");
-        }
-        if (m < 0 || m > 10)
-        {
-            printf("El valor ingresado debe estar entre 0 y 10\n");
-        }
-    } while (val != 1 || m < 0 || m > 10);
-    return m;
 }
