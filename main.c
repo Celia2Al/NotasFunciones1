@@ -2,51 +2,35 @@
 #include "funciones.h"
 
 int main() {
-    Libro libros[MAX_LIBROS];
-    int cantidad = 0;
+    Equipo equipos[MAX_EQUIPOS];
+    Jugador jugadores[MAX_JUGADORES];
+    int numEquipos = 0, numJugadores = 0;
     int opcion;
 
+    cargarDatos(equipos, &numEquipos, jugadores, &numJugadores);
+
     do {
-        printf("\n--- MENU BIBLIOTECA ---\n");
-        printf("1. Registrar libro\n");
-        printf("2. Mostrar libros\n");
-        printf("3. Buscar libro\n");
-        printf("4. Actualizar estado\n");
-        printf("5. Eliminar libro\n");
-        printf("6. Salir\n");
-
-        opcion = leerEnteroPositivo("Seleccione una opcion: ");
-
-        
-        if (cantidad == 0 && opcion != 1 && opcion != 6) {
-            printf("  Debe registrar al menos un libro antes de usar esta opcion.\n");
-            continue;
-        }
+        menu();
+        printf("Seleccione una opción: ");
+        scanf("%d", &opcion);
 
         switch (opcion) {
             case 1:
-                registrarLibro(libros, &cantidad, cantidad);
+                registrarPartido(equipos, &numEquipos, jugadores, &numJugadores);
                 break;
             case 2:
-                mostrarLibros(libros, cantidad);
+                mostrarTabla(equipos, numEquipos);
                 break;
             case 3:
-                buscarLibro(libros, cantidad);
+                mostrarGoleador(jugadores, numJugadores);
                 break;
             case 4:
-                actualizarEstado(libros, cantidad);
-                break;
-            case 5:
-                eliminarLibro(libros, &cantidad);
-                break;
-            case 6:
                 printf("Saliendo del programa...\n");
                 break;
             default:
-                printf("Opcion no valida.\n");
+                printf("Opción no válida.\n");
         }
-
-    } while (opcion != 6);
+    } while (opcion != 4);
 
     return 0;
 }

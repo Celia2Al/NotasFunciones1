@@ -1,23 +1,30 @@
 #ifndef FUNCIONES_H
 #define FUNCIONES_H
 
-#define MAX_LIBROS 10
+#define MAX_EQUIPOS 20
+#define MAX_JUGADORES 100
+#define MAX_NOMBRE 50
 
 typedef struct {
-    int id;
-    char titulo[100];
-    char autor[50];
-    int anio;
-    char estado[15]; // Disponible o Prestado
-} Libro;
+    char nombre[MAX_NOMBRE];
+    int goles;
+} Jugador;
 
-void registrarLibro(Libro libros[], int *n ,int cantidad); 
-void mostrarLibros(Libro libros[], int n);
-void buscarLibro(Libro libros[], int n);
-void actualizarEstado(Libro libros[], int n);
-void eliminarLibro(Libro libros[], int *n);
+typedef struct {
+    char nombre[MAX_NOMBRE];
+    int puntos;
+    int golesFavor;
+    int golesContra;
+} Equipo;
 
-int leerEnteroPositivo(const char mensaje[]);
+void menu();
+void registrarPartido(Equipo equipos[], int *numEquipos, Jugador jugadores[], int *numJugadores);
+void mostrarTabla(Equipo equipos[], int numEquipos);
+void mostrarGoleador(Jugador jugadores[], int numJugadores);
+int buscarEquipo(Equipo equipos[], int numEquipos, const char *nombre);
+int buscarJugador(Jugador jugadores[], int numJugadores, const char *nombre);
+int validarNombre(const char *nombre);
+void guardarDatos(Equipo equipos[], int numEquipos, Jugador jugadores[], int numJugadores);
+void cargarDatos(Equipo equipos[], int *numEquipos, Jugador jugadores[], int *numJugadores);
 
 #endif
-
